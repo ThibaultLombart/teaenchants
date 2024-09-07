@@ -23,8 +23,14 @@ public class CustomEnchants {
             Material.WOODEN_HOE, Material.STONE_HOE, Material.IRON_HOE, Material.GOLDEN_HOE, Material.DIAMOND_HOE, Material.NETHERITE_HOE
     );
 
+    public static final String SMELTING = "Smelting";
+    public static final List<Material> SMELTING_ITEMS_ALLOWED = List.of(
+            Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLDEN_PICKAXE, Material.DIAMOND_PICKAXE, Material.NETHERITE_PICKAXE
+    );
+
     static {
         dictionary.put(MAGNETISM, MAGNETISM_ITEMS_ALLOWED);
+        dictionary.put(SMELTING, SMELTING_ITEMS_ALLOWED);
     }
 
     // Check EnchantLore
@@ -62,8 +68,6 @@ public class CustomEnchants {
             lore.add(ChatColor.GRAY + enchant);
             meta.setLore(lore);
             item.setItemMeta(meta);
-
-            System.out.println(lore.toString());
         }
 
     }

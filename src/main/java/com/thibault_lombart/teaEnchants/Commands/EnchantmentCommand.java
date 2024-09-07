@@ -13,7 +13,7 @@ import java.util.List;
 
 public class EnchantmentCommand implements CommandExecutor {
 
-    private static List<String> listEnchants = Arrays.asList(CustomEnchants.MAGNETISM);
+    private static List<String> listEnchants = Arrays.asList(CustomEnchants.MAGNETISM, CustomEnchants.SMELTING);
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

@@ -11,8 +11,6 @@ public class MagnetismEnchant {
 
     public static void handleMagnetism(Player player, List<ItemStack> drops) {
 
-        System.out.println("Magnetism Handled");
-
         for (ItemStack drop : drops) {
             HashMap<Integer, ItemStack> remaining = player.getInventory().addItem(drop);
 

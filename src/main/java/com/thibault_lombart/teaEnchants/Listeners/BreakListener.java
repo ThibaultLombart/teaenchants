@@ -2,6 +2,7 @@ package com.thibault_lombart.teaEnchants.Listeners;
 
 import com.thibault_lombart.teaEnchants.CustomEnchants.CustomEnchants;
 import com.thibault_lombart.teaEnchants.CustomEnchants.MagnetismEnchant;
+import com.thibault_lombart.teaEnchants.CustomEnchants.SmeltingEnchant;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,17 +24,19 @@ public class BreakListener implements Listener {
         if(!item.hasItemMeta())
             return;
 
-        System.out.println("TEST 1 PUTAIN");
-        System.out.println(CustomEnchants.hasEnchantLore(item, CustomEnchants.MAGNETISM));
-        System.out.println(item.getItemMeta().getLore().toString());
+        event.setDropItems(false);
+
+        if (CustomEnchants.hasEnchantLore(item, CustomEnchants.SMELTING)){
+            drops = SmeltingEnchant.handleSmelting(drops);
+        }
 
         if (CustomEnchants.hasEnchantLore(item, CustomEnchants.MAGNETISM)){
 
-            System.out.println("MAGNETISM");
-
-            event.setDropItems(false);
-
             MagnetismEnchant.handleMagnetism(player, drops);
+        } else {
+            for (ItemStack drop : drops) {
+                event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), drop);
+            }
         }
     }
 

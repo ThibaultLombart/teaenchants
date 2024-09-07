@@ -1,4 +1,6 @@
 .gradle/
 .idea/
 gradle.properties
-gradle
+gradle/
+server/
+build/

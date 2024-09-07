@@ -2,3 +2,13 @@ name: TeaEnchants
 version: '1.0-SNAPSHOT'
 main: com.thibault_lombart.teaEnchants.TeaEnchants
 api-version: '1.21'
+commands:
+  TeaEnchants:
+    description: Apply a custom enchant.
+    usage: /<command> <enchantment>
+    permission: teaenchants.teaenchants
+    permission-message: You don't have the permission to use this command.
+permissions:
+  teaenchants.teaenchants:
+    description: To use the command TeaEnchants
+    default: op

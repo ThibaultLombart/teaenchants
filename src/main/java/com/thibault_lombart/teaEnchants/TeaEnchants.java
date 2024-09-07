@@ -9,6 +9,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TeaEnchants extends JavaPlugin {
 
+    public static TeaEnchants plugin;
+
+    public static TeaEnchants getInstance(){
+        return TeaEnchants.plugin;
+    }
+
     @Override
     public void onEnable() {
 
@@ -19,6 +25,8 @@ public final class TeaEnchants extends JavaPlugin {
         } else {
             SmeltingEnchant.setup(0);
         }
+
+        TeaEnchants.plugin = this;
 
         logoDisplay();
         System.out.println("Enabling TeaEnchants");
@@ -39,6 +47,8 @@ public final class TeaEnchants extends JavaPlugin {
         System.out.println("Disabling TeaEnchants");
 
     }
+
+
 
     public void logoDisplay() {
         System.out.println("()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()");

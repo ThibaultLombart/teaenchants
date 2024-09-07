@@ -2,6 +2,7 @@ package com.thibault_lombart.teaEnchants.Listeners;
 
 import com.thibault_lombart.teaEnchants.CustomEnchants.CustomEnchants;
 import com.thibault_lombart.teaEnchants.CustomEnchants.MagnetismEnchant;
+import com.thibault_lombart.teaEnchants.CustomEnchants.ReplantingEnchant;
 import com.thibault_lombart.teaEnchants.CustomEnchants.SmeltingEnchant;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,6 +29,10 @@ public class BreakListener implements Listener {
 
         if (CustomEnchants.hasEnchantLore(item, CustomEnchants.SMELTING)){
             drops = SmeltingEnchant.handleSmelting(drops);
+        }
+
+        if (CustomEnchants.hasEnchantLore(item, CustomEnchants.REPLANTING) && ReplantingEnchant.isBreakablePlant(event.getBlock())){
+            drops = ReplantingEnchant.handleReplanting(drops,event.getBlock());
         }
 
         if (CustomEnchants.hasEnchantLore(item, CustomEnchants.MAGNETISM)){

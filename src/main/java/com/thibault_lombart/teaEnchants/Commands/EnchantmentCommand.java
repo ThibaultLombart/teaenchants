@@ -13,7 +13,7 @@ import java.util.List;
 
 public class EnchantmentCommand implements CommandExecutor {
 
-    private static List<String> listEnchants = Arrays.asList(CustomEnchants.MAGNETISM, CustomEnchants.SMELTING);
+    private static List<String> listEnchants = Arrays.asList(CustomEnchants.MAGNETISM, CustomEnchants.SMELTING, CustomEnchants.REPLANTING);
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -21,11 +21,6 @@ public class EnchantmentCommand implements CommandExecutor {
             Player player = (Player) sender;
 
             ItemStack item = player.getInventory().getItemInMainHand();
-
-            if(item == null) {
-                player.sendMessage("Vous devez avoir un item dans la main.");
-                return false;
-            }
 
             if(args.length != 1) {
                 player.sendMessage("Veuillez mettre un nom d'enchantement.");

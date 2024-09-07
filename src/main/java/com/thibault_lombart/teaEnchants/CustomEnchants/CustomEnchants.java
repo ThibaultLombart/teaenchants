@@ -28,9 +28,15 @@ public class CustomEnchants {
             Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLDEN_PICKAXE, Material.DIAMOND_PICKAXE, Material.NETHERITE_PICKAXE
     );
 
+    public static final String REPLANTING = "Replanting";
+    public static final List<Material> REPLANTING_ITEMS_ALLOWED = List.of(
+            Material.WOODEN_HOE, Material.STONE_HOE, Material.IRON_HOE, Material.GOLDEN_HOE, Material.DIAMOND_HOE, Material.NETHERITE_HOE
+    );
+
     static {
         dictionary.put(MAGNETISM, MAGNETISM_ITEMS_ALLOWED);
         dictionary.put(SMELTING, SMELTING_ITEMS_ALLOWED);
+        dictionary.put(REPLANTING, REPLANTING_ITEMS_ALLOWED);
     }
 
     // Check EnchantLore

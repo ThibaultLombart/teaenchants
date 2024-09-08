@@ -1,9 +1,12 @@
 package com.thibault_lombart.teaEnchants;
 
 import com.thibault_lombart.teaEnchants.Commands.EnchantmentCommand;
+import com.thibault_lombart.teaEnchants.Commands.GiveEnchantedBookCommand;
 import com.thibault_lombart.teaEnchants.CustomEnchants.SmeltingEnchant;
+import com.thibault_lombart.teaEnchants.Listeners.AnvilListener;
 import com.thibault_lombart.teaEnchants.Listeners.BreakListener;
 import com.thibault_lombart.teaEnchants.Listeners.EntityKillListener;
+import com.thibault_lombart.teaEnchants.Listeners.GrinderListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,10 +37,13 @@ public final class TeaEnchants extends JavaPlugin {
 
         // Add Commands
         this.getCommand("TeaEnchants").setExecutor(new EnchantmentCommand());
+        this.getCommand("TeaEnchantsBook").setExecutor(new GiveEnchantedBookCommand());
 
         // Add listeners
         getServer().getPluginManager().registerEvents(new BreakListener(), this);
         getServer().getPluginManager().registerEvents(new EntityKillListener(), this);
+        getServer().getPluginManager().registerEvents(new AnvilListener(), this);
+        getServer().getPluginManager().registerEvents(new GrinderListener(), this);
     }
 
     @Override

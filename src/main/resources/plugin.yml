@@ -8,7 +8,15 @@ commands:
     usage: /<command> <enchantment>
     permission: teaenchants.teaenchants
     permission-message: You don't have the permission to use this command.
+  TeaEnchantsBook:
+    description: Give an enchanted book to the player selected.
+    usage: /<command> <player> <enchantment>
+    permission: teaenchants.teaenchantsbook
+    permission-message: You don't have the permission to use this command.
 permissions:
   teaenchants.teaenchants:
     description: To use the command TeaEnchants
+    default: op
+  teaenchants.teaenchantsbook:
+    description: To use the command TeaEnchantsBook
     default: op

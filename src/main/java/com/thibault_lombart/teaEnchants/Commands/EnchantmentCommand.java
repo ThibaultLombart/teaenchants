@@ -13,8 +13,6 @@ import java.util.List;
 
 public class EnchantmentCommand implements CommandExecutor {
 
-    private static List<String> listEnchants = Arrays.asList(CustomEnchants.MAGNETISM, CustomEnchants.SMELTING, CustomEnchants.REPLANTING);
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -27,7 +25,7 @@ public class EnchantmentCommand implements CommandExecutor {
                 return false;
             }
 
-            String enchant = findEnchantmentIgnoreCase(args[0]);
+            String enchant = CustomEnchants.findEnchantmentIgnoreCase(args[0]);
             if(enchant == null) {
                 player.sendMessage("Veuillez choisir un nom d'enchantement.");
                 return false;
@@ -44,19 +42,12 @@ public class EnchantmentCommand implements CommandExecutor {
             }
 
             CustomEnchants.addCustomEnchantLore(item, enchant);
+            CustomEnchants.enchantmentEffect(item);
 
             player.sendMessage("Vous avez enchanté votre item avec l'enchantement "+enchant+" !");
+            return true;
         }
 
-        return true;
-    }
-
-    public static String findEnchantmentIgnoreCase(String input) {
-        for (String enchantment : listEnchants) {
-            if (enchantment.equalsIgnoreCase(input)) {
-                return enchantment;
-            }
-        }
-        return null;
+        return false;
     }
 }

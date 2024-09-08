@@ -1,18 +1,21 @@
 package com.thibault_lombart.teaEnchants.CustomEnchants;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CustomEnchants {
 
     public static final Map<String,List<Material>> dictionary = new HashMap<String,List<Material>>();
+
+    private static List<String> listEnchants = Arrays.asList(CustomEnchants.MAGNETISM, CustomEnchants.SMELTING, CustomEnchants.REPLANTING);
 
     public static final String MAGNETISM = "Magnetism";
     public static final List<Material> MAGNETISM_ITEMS_ALLOWED = List.of(
@@ -88,8 +91,62 @@ public class CustomEnchants {
         lore.remove(enchant);
         meta.setLore(lore);
         item.setItemMeta(meta);
+    }
 
 
+    // Check the enchantment effect
+    public static void enchantmentEffect(ItemStack item){
+        ItemMeta meta = item.getItemMeta();
+
+        if(meta == null) return;
+
+        if(meta.getEnchants().isEmpty()) {
+            meta.addEnchant(Enchantment.SOUL_SPEED, 1, true);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            item.setItemMeta(meta);
+        } else {
+            if(meta.getEnchants().containsKey(Enchantment.SOUL_SPEED) && meta.getEnchants().size() > 1) {
+                meta.removeEnchant(Enchantment.SOUL_SPEED);
+                meta.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
+                item.setItemMeta(meta);
+            }
+        }
+
+        return;
+    }
+
+
+    public static void giveEnchantedBook(Player player, String enchantment){
+        ItemStack enchantedBook = new ItemStack(Material.ENCHANTED_BOOK);
+
+        ItemMeta meta = enchantedBook.getItemMeta();
+
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.GRAY + enchantment);
+        meta.setLore(lore);
+
+        enchantedBook.setItemMeta(meta);
+
+        if(player.getInventory().firstEmpty() != -1){
+            player.getInventory().addItem(enchantedBook);
+            player.sendMessage("Tu as reçu un livre enchanté avec " + enchantment + ".");
+        } else {
+            Location playerLocation = player.getLocation();
+            player.getWorld().dropItemNaturally(playerLocation, enchantedBook);
+            player.sendMessage("Ton inventaire est plein ! Le livre a été déposé par terre.");
+        }
+    }
+
+    public static String findEnchantmentIgnoreCase(String input) {
+
+        input = input.replaceFirst("^§7","");
+
+        for (String enchantment : listEnchants) {
+            if (enchantment.equalsIgnoreCase(input)) {
+                return enchantment;
+            }
+        }
+        return null;
     }
 
 }

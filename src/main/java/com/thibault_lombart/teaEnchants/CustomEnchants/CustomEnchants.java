@@ -1,5 +1,6 @@
 package com.thibault_lombart.teaEnchants.CustomEnchants;
 
+import com.thibault_lombart.teaEnchants.Utils.InformationsFromConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,12 +14,12 @@ import java.util.*;
 
 public class CustomEnchants {
 
-    public static final Map<String,List<Material>> dictionary = new HashMap<String,List<Material>>();
+    private static final Map<String,List<Material>> dictionary = new HashMap<String,List<Material>>();
 
-    private static List<String> listEnchants = Arrays.asList(CustomEnchants.MAGNETISM, CustomEnchants.SMELTING, CustomEnchants.REPLANTING);
+    private static List<String> listEnchants = new ArrayList<>();
 
-    public static final String MAGNETISM = "Magnetism";
-    public static final List<Material> MAGNETISM_ITEMS_ALLOWED = List.of(
+    private static String magnetism = "Magnetism";
+    private static final List<Material> MAGNETISM_ITEMS_ALLOWED = List.of(
             Material.WOODEN_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.GOLDEN_SWORD, Material.DIAMOND_SWORD, Material.NETHERITE_SWORD,
             Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLDEN_PICKAXE, Material.DIAMOND_PICKAXE, Material.NETHERITE_PICKAXE,
             Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE,
@@ -26,20 +27,85 @@ public class CustomEnchants {
             Material.WOODEN_HOE, Material.STONE_HOE, Material.IRON_HOE, Material.GOLDEN_HOE, Material.DIAMOND_HOE, Material.NETHERITE_HOE
     );
 
-    public static final String SMELTING = "Smelting";
-    public static final List<Material> SMELTING_ITEMS_ALLOWED = List.of(
+    private static String smelting = "Smelting";
+    private static final List<Material> SMELTING_ITEMS_ALLOWED = List.of(
             Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLDEN_PICKAXE, Material.DIAMOND_PICKAXE, Material.NETHERITE_PICKAXE
     );
 
-    public static final String REPLANTING = "Replanting";
-    public static final List<Material> REPLANTING_ITEMS_ALLOWED = List.of(
+    private static String replanting = "Replanting";
+    private static final List<Material> REPLANTING_ITEMS_ALLOWED = List.of(
             Material.WOODEN_HOE, Material.STONE_HOE, Material.IRON_HOE, Material.GOLDEN_HOE, Material.DIAMOND_HOE, Material.NETHERITE_HOE
     );
 
-    static {
-        dictionary.put(MAGNETISM, MAGNETISM_ITEMS_ALLOWED);
-        dictionary.put(SMELTING, SMELTING_ITEMS_ALLOWED);
-        dictionary.put(REPLANTING, REPLANTING_ITEMS_ALLOWED);
+    private static String treecutter = "Tree Cutter";
+    private static final List<Material> TREECUTTER_ITEMS_ALLOWED = List.of(
+            Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE
+    );
+
+
+
+
+    public static void setup(){
+
+        listEnchants.clear();
+        dictionary.clear();
+
+        magnetism = InformationsFromConfig.getMagnetismName();
+        smelting = InformationsFromConfig.getSmeltingName();
+        replanting = InformationsFromConfig.getReplantingName();
+        treecutter = InformationsFromConfig.getTreeCutterName();
+
+        if(InformationsFromConfig.isMagnetismActivated()) {
+            listEnchants.add(magnetism);
+            dictionary.put(magnetism, MAGNETISM_ITEMS_ALLOWED);
+        }
+        if(InformationsFromConfig.isSmeltingActivated()) {
+            listEnchants.add(smelting);
+            dictionary.put(smelting, SMELTING_ITEMS_ALLOWED);
+        }
+        if(InformationsFromConfig.isReplantingActivated()) {
+            listEnchants.add(replanting);
+            dictionary.put(replanting, REPLANTING_ITEMS_ALLOWED);
+        }
+        if(InformationsFromConfig.isTreeCutterActivated()) {
+            listEnchants.add(treecutter);
+            dictionary.put(treecutter, TREECUTTER_ITEMS_ALLOWED);
+        }
+
+    }
+
+
+
+    public static List<String> getListEnchants() {
+        return listEnchants;
+    }
+
+    public static String getMagnetism() {
+        return magnetism;
+    }
+
+    public static String getSmelting() {
+        return smelting;
+    }
+
+    public static String getReplanting() {
+        return replanting;
+    }
+
+    public static String getTreecutter() {
+        return treecutter;
+    }
+
+    public static boolean isEnchantAllowed(ItemStack item, String enchant) {
+        if(item == null) return false;
+        Material material = item.getType();
+
+        if(dictionary.containsKey(enchant)) {
+            return dictionary.get(enchant).contains(material);
+        }
+
+
+        return false;
     }
 
     // Check EnchantLore
@@ -142,7 +208,8 @@ public class CustomEnchants {
         input = input.replaceFirst("^§7","");
 
         for (String enchantment : listEnchants) {
-            if (enchantment.equalsIgnoreCase(input)) {
+            String enchantmentWithoutSpace = enchantment.replaceFirst(" ","");
+            if (enchantmentWithoutSpace.equalsIgnoreCase(input)) {
                 return enchantment;
             }
         }

@@ -13,10 +13,18 @@ commands:
     usage: /<command> <player> <enchantment>
     permission: teaenchants.teaenchantsbook
     permission-message: You don't have the permission to use this command.
+  TeaEnchantsReload:
+    description: Reload the plugin.
+    usage: /<command>
+    permission: teaenchants.teaenchantsreload
+    permission-message: You don't have the permission to use this command.
 permissions:
   teaenchants.teaenchants:
     description: To use the command TeaEnchants
     default: op
   teaenchants.teaenchantsbook:
     description: To use the command TeaEnchantsBook
+    default: op
+  teaenchants.teaenchantsreload:
+    description: To use the command TeaEnchantsReload
     default: op

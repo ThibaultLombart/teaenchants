@@ -60,7 +60,7 @@ public class AnvilListener implements Listener {
             if(lore != null) {
                 for (String s : lore) {
                     String enchant = CustomEnchants.findEnchantmentIgnoreCase(s);
-                    if(enchant != null && CustomEnchants.dictionary.get(enchant).contains(resultItem.getType())) {
+                    if(enchant != null && CustomEnchants.isEnchantAllowed(resultItem, enchant)) {
                         CustomEnchants.addCustomEnchantLore(resultItem, enchant);
                         CustomEnchants.enchantmentEffect(resultItem);
                     }

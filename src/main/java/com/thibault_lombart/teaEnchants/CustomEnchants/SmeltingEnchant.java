@@ -1,5 +1,6 @@
 package com.thibault_lombart.teaEnchants.CustomEnchants;
 
+import com.thibault_lombart.teaEnchants.Utils.InformationsFromConfig;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -24,6 +25,9 @@ public class SmeltingEnchant {
     }
 
     public static List<ItemStack> handleSmelting(List<ItemStack> drops){
+
+        if(!InformationsFromConfig.isSmeltingActivated()) return drops;
+
         List<ItemStack> newDrops = new ArrayList<ItemStack>();
 
         for (ItemStack drop : drops) {

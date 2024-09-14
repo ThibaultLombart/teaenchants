@@ -36,7 +36,7 @@ public class EnchantmentCommand implements CommandExecutor {
                 return false;
             }
 
-            if(!CustomEnchants.dictionary.get(enchant).contains(item.getType())){
+            if(!CustomEnchants.isEnchantAllowed(item, enchant)) {
                 player.sendMessage("Vous ne pouvez pas mettre cet enchantement sur votre item.");
                 return false;
             }

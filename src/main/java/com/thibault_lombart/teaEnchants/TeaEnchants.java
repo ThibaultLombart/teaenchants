@@ -2,13 +2,21 @@ package com.thibault_lombart.teaEnchants;
 
 import com.thibault_lombart.teaEnchants.Commands.EnchantmentCommand;
 import com.thibault_lombart.teaEnchants.Commands.GiveEnchantedBookCommand;
+import com.thibault_lombart.teaEnchants.Commands.ReloadCommand;
+import com.thibault_lombart.teaEnchants.CustomEnchants.CustomEnchants;
 import com.thibault_lombart.teaEnchants.CustomEnchants.SmeltingEnchant;
 import com.thibault_lombart.teaEnchants.Listeners.AnvilListener;
 import com.thibault_lombart.teaEnchants.Listeners.BreakListener;
 import com.thibault_lombart.teaEnchants.Listeners.EntityKillListener;
 import com.thibault_lombart.teaEnchants.Listeners.GrinderListener;
+import com.thibault_lombart.teaEnchants.TabCompleter.EnchantCommandTabCompletor;
+import com.thibault_lombart.teaEnchants.TabCompleter.GiveEnchantedBookCommandTabCompletor;
+import com.thibault_lombart.teaEnchants.Utils.InformationsFromConfig;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
 
 public final class TeaEnchants extends JavaPlugin {
 
@@ -21,6 +29,12 @@ public final class TeaEnchants extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        TeaEnchants.plugin = this;
+
+        saveDefaultConfig();
+
+        reloadConfig();
+
         String version = Bukkit.getBukkitVersion();
 
         if (isVersionOrHigher(version)) {
@@ -29,8 +43,6 @@ public final class TeaEnchants extends JavaPlugin {
             SmeltingEnchant.setup(0);
         }
 
-        TeaEnchants.plugin = this;
-
         logoDisplay();
         System.out.println("Enabling TeaEnchants");
 
@@ -38,6 +50,11 @@ public final class TeaEnchants extends JavaPlugin {
         // Add Commands
         this.getCommand("TeaEnchants").setExecutor(new EnchantmentCommand());
         this.getCommand("TeaEnchantsBook").setExecutor(new GiveEnchantedBookCommand());
+        this.getCommand("TeaEnchantsReload").setExecutor(new ReloadCommand());
+
+        // Add Tab completor
+        this.getCommand("TeaEnchants").setTabCompleter(new EnchantCommandTabCompletor());
+        this.getCommand("TeaEnchantsBook").setTabCompleter(new GiveEnchantedBookCommandTabCompletor());
 
         // Add listeners
         getServer().getPluginManager().registerEvents(new BreakListener(), this);
@@ -49,6 +66,7 @@ public final class TeaEnchants extends JavaPlugin {
     @Override
     public void onDisable() {
 
+        saveConfig();
         logoDisplay();
         System.out.println("Disabling TeaEnchants");
 
@@ -65,7 +83,7 @@ public final class TeaEnchants extends JavaPlugin {
         System.out.println("    | | / _ \\ / _` ||  __|  | '_ \\  / __|| '_ \\  / _` || '_ \\ | __|");
         System.out.println("    | ||  __/| (_| || |____ | | | || (__ | | | || (_| || | | || |_ ");
         System.out.println("    |_| \\___| \\__,_||______||_| |_| \\___||_| |_| \\__,_||_| |_| \\__|");
-        System.out.println("");
+        System.out.println();
         System.out.println("by Thybax                                                          ");
         System.out.println("()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()");
     }
@@ -79,7 +97,6 @@ public final class TeaEnchants extends JavaPlugin {
         int targetMajorVersion = Integer.parseInt(targetParts[0]);
         int targetMinorVersion = Integer.parseInt(targetParts[1]);
 
-        // Compare les versions
         if (majorVersion > targetMajorVersion) {
             return true;
         } else if (majorVersion == targetMajorVersion) {
@@ -89,5 +106,12 @@ public final class TeaEnchants extends JavaPlugin {
         }
     }
 
+    public void reloadConfig() {
+        YamlConfiguration config = null;
+        File configFile = new File(getDataFolder(), "config.yml");
+        config = YamlConfiguration.loadConfiguration(configFile);
+        InformationsFromConfig.setup(config);
+        CustomEnchants.setup();
+    }
 
 }

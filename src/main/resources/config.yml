@@ -1,0 +1,15 @@
+magnetism:
+  name: "Magnetism"
+  activated: true
+
+smelting:
+  name: "Smelting"
+  activated: true
+
+replanting:
+  name: "Replanting"
+  activated: true
+
+treecutter:
+  name: "Tree Cutter"
+  activated: true

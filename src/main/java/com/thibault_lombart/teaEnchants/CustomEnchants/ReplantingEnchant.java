@@ -1,6 +1,7 @@
 package com.thibault_lombart.teaEnchants.CustomEnchants;
 
 import com.thibault_lombart.teaEnchants.TeaEnchants;
+import com.thibault_lombart.teaEnchants.Utils.InformationsFromConfig;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -24,6 +25,9 @@ public class ReplantingEnchant {
     }
 
     public static List<ItemStack> handleReplanting(List<ItemStack> drops, Block block){
+
+        if(!InformationsFromConfig.isReplantingActivated()) return drops;
+
         List<ItemStack> newDrops = new ArrayList<ItemStack>();
 
         Material blockType = block.getType();

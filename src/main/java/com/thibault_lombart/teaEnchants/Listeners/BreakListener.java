@@ -1,9 +1,6 @@
 package com.thibault_lombart.teaEnchants.Listeners;
 
-import com.thibault_lombart.teaEnchants.CustomEnchants.CustomEnchants;
-import com.thibault_lombart.teaEnchants.CustomEnchants.MagnetismEnchant;
-import com.thibault_lombart.teaEnchants.CustomEnchants.ReplantingEnchant;
-import com.thibault_lombart.teaEnchants.CustomEnchants.SmeltingEnchant;
+import com.thibault_lombart.teaEnchants.CustomEnchants.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,16 +24,19 @@ public class BreakListener implements Listener {
 
         event.setDropItems(false);
 
-        if (CustomEnchants.hasEnchantLore(item, CustomEnchants.SMELTING)){
+        if (CustomEnchants.hasEnchantLore(item, CustomEnchants.getTreecutter())){
+            drops = TreeCutterEnchant.handleTreeCutter(event.getBlock(), drops);
+        }
+
+        if (CustomEnchants.hasEnchantLore(item, CustomEnchants.getSmelting())){
             drops = SmeltingEnchant.handleSmelting(drops);
         }
 
-        if (CustomEnchants.hasEnchantLore(item, CustomEnchants.REPLANTING) && ReplantingEnchant.isBreakablePlant(event.getBlock())){
+        if (CustomEnchants.hasEnchantLore(item, CustomEnchants.getReplanting()) && ReplantingEnchant.isBreakablePlant(event.getBlock())){
             drops = ReplantingEnchant.handleReplanting(drops,event.getBlock());
         }
 
-        if (CustomEnchants.hasEnchantLore(item, CustomEnchants.MAGNETISM)){
-
+        if (CustomEnchants.hasEnchantLore(item, CustomEnchants.getMagnetism())){
             MagnetismEnchant.handleMagnetism(player, drops);
         } else {
             for (ItemStack drop : drops) {

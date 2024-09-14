@@ -26,7 +26,7 @@ public class EntityKillListener implements Listener {
             if(!item.hasItemMeta())
                 return;
 
-            if (CustomEnchants.hasEnchantLore(item, CustomEnchants.MAGNETISM)){
+            if (CustomEnchants.hasEnchantLore(item, CustomEnchants.getMagnetism())){
 
                 List<ItemStack> drops = (List<ItemStack>) event.getDrops();
 

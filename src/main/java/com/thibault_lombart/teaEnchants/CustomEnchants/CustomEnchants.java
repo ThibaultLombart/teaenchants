@@ -140,7 +140,11 @@ public class CustomEnchants {
                 lore = new ArrayList<>();
             }
 
-            lore.add(ChatColor.GRAY + enchant);
+            if(InformationsFromConfig.getTopOrBottom()) {
+                lore.addFirst(ChatColor.GRAY + enchant);
+            } else {
+                lore.add(ChatColor.GRAY + enchant);
+            }
             meta.setLore(lore);
             item.setItemMeta(meta);
         }
@@ -207,8 +211,11 @@ public class CustomEnchants {
 
         input = input.replaceFirst("^§7","");
 
+        System.out.println(input);
+
         for (String enchantment : listEnchants) {
-            String enchantmentWithoutSpace = enchantment.replaceFirst(" ","");
+            String enchantmentWithoutSpace = enchantment.replaceAll(" ","");
+            System.out.println(enchantmentWithoutSpace);
             if (enchantmentWithoutSpace.equalsIgnoreCase(input)) {
                 return enchantment;
             }

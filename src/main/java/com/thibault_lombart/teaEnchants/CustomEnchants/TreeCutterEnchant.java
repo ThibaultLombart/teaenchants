@@ -12,7 +12,6 @@ import java.util.List;
 
 public class TreeCutterEnchant {
 
-    public static int numberOfLogCut = 5;
 
     public static List<ItemStack> handleTreeCutter(Block block, List<ItemStack> drops) {
 
@@ -22,7 +21,7 @@ public class TreeCutterEnchant {
         Block blockDown = block.getRelative(0,-1,0);
         int count = 1;
 
-        while (count < numberOfLogCut && (blockUp != null || blockDown != null)){
+        while (count < InformationsFromConfig.getNumberOfLogsToCut() && (blockUp != null || blockDown != null)){
             if(blockUp != null){
                 if(blockUp.getType() == Material.OAK_LOG || blockUp.getType() == Material.BIRCH_LOG || blockUp.getType() == Material.SPRUCE_LOG || blockUp.getType() == Material.JUNGLE_LOG || blockUp.getType() == Material.ACACIA_LOG || blockUp.getType() == Material.DARK_OAK_LOG){
                     drops.addAll(blockUp.getDrops());

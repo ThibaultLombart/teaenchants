@@ -1,6 +1,6 @@
 magnetism:
-  name: "Magnetism"
-  activated: true
+  name: "Magnetism" # Name of the enchantment
+  activated: true # true or false
 
 smelting:
   name: "Smelting"
@@ -13,3 +13,6 @@ replanting:
 treecutter:
   name: "Tree Cutter"
   activated: true
+  number_of_logs_to_cut: 5
+
+lore: "top" # top or bottom
